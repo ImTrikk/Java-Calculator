@@ -50,6 +50,7 @@ public class calculatorFrame implements ActionListener {
       frame.setResizable(false);
       frame.setBackground(frameColor);
 
+      // funstion chuchu
       percentBtn = new Button("%");
       negBtn = new Button("+/-");
       addBtn = new Button("+");
@@ -161,18 +162,18 @@ public class calculatorFrame implements ActionListener {
    }
 
    // action performed for buttons and functions
-
    @Override
    public void actionPerformed(ActionEvent e) {
 
       for (int i = 0; i < 10; i++) {
          if (e.getSource() == numpadsBtn[i]) {
-            resultField.setText(resultField.getText().concat(String.valueOf(i)));
 
+            resultField.setText(resultField.getText().concat(String.valueOf(i)));
          }
       }
+
+
       if (e.getSource() == addBtn) {
-         
 
          if(num1 <= 0){
             num1 = Double.parseDouble(resultField.getText());
@@ -183,10 +184,10 @@ public class calculatorFrame implements ActionListener {
             num1 = result;
          }
          opr = "+";
-         resultField.setText("");
+         resultField.setText(resultField.getText() + opr);
       }
       if (e.getSource() == subBtn) {
-         if (num1 == 0) {
+         if (num1 <= 0) {
             num1 = Double.parseDouble(resultField.getText());
          } else {
             num2 = Double.parseDouble(resultField.getText());
@@ -194,10 +195,10 @@ public class calculatorFrame implements ActionListener {
             num1 = result;
          }
          opr = "-";
-         resultField.setText("");
+         resultField.setText(resultField.getText() + opr);
       }
       if (e.getSource() == mulBtn) {
-         if (num1 == 0) {
+         if (num1 <= 0) {
             num1 = Double.parseDouble(resultField.getText());
          } else {
             num2 = Double.parseDouble(resultField.getText());
@@ -205,10 +206,10 @@ public class calculatorFrame implements ActionListener {
             num1 = result;
          }
          opr = "X";
-         resultField.setText("");
+         resultField.setText(resultField.getText() + opr);
       }
       if (e.getSource() == divBtn) {
-         if (num1 == 0) {
+         if (num1 <= 0) {
             num1 = Double.parseDouble(resultField.getText());
          } else {
             num2 = Double.parseDouble(resultField.getText());
@@ -216,7 +217,7 @@ public class calculatorFrame implements ActionListener {
             num1 = result;
          }
          opr = "/";
-         resultField.setText("");
+         resultField.setText(resultField.getText() + opr);
       }
 
       // !not working yet
@@ -244,7 +245,14 @@ public class calculatorFrame implements ActionListener {
 
       if (e.getSource() == equBtn) {
 
-         num2 = Double.parseDouble(resultField.getText());
+
+         String expression = resultField.getText();
+         String[] parts = expression.split("\\" + opr);
+
+         num1 = Double.parseDouble(parts[0]);
+         num2 = Double.parseDouble(parts[1]);
+
+         // num2 = Double.parseDouble(resultField.getText());
 
          switch (opr) {
             case "+":
@@ -264,7 +272,7 @@ public class calculatorFrame implements ActionListener {
                opr = "";
                break;
             case "%":
-               result = num1 * (num2 / 100);
+               result = num1 / 100;
                opr = "";
                break;
             case "root":
@@ -279,11 +287,14 @@ public class calculatorFrame implements ActionListener {
                BigInteger factorial = BigInteger.ONE;
                for (int i = 1; i <= num1; i++) {
                   factorial = factorial.multiply(BigInteger.valueOf(i));
+                  // 1 * 2 * .... num1
+                  // 5 * 4 * 3 
                }
                result = factorial.doubleValue();
                break;
          }
-         resultField.setText(String.valueOf(result));
+
+         displayField.setText(String.valueOf(result));
          num1 = 0;
          opr = "";
          temp = result;
@@ -316,6 +327,7 @@ public class calculatorFrame implements ActionListener {
       // deletes the entirem resultField
       if (e.getSource() == clrBtn) {
          resultField.setText("");
+         displayField.setText("");
       }
 
       // funciton for negate function
