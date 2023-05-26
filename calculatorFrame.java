@@ -198,14 +198,14 @@ public class calculatorFrame implements ActionListener {
          resultField.setText(resultField.getText() + opr);
       }
       if (e.getSource() == mulBtn) {
-         if (num1 <= 0) {
+         if (num1 == 0) {
             num1 = Double.parseDouble(resultField.getText());
          } else {
             num2 = Double.parseDouble(resultField.getText());
             result = num1 * num2;
             num1 = result;
          }
-         opr = "X";
+         opr = "x";
          resultField.setText(resultField.getText() + opr);
       }
       if (e.getSource() == divBtn) {
@@ -249,6 +249,8 @@ public class calculatorFrame implements ActionListener {
          String expression = resultField.getText();
          String[] parts = expression.split("\\" + opr);
 
+         //5 resultfield 
+
          num1 = Double.parseDouble(parts[0]);
          num2 = Double.parseDouble(parts[1]);
 
@@ -263,7 +265,7 @@ public class calculatorFrame implements ActionListener {
                result = num1 - num2;
                opr = "";
                break;
-            case "X":
+            case "x":
                result = num1 * num2;
                opr = "";
                break;
@@ -295,7 +297,8 @@ public class calculatorFrame implements ActionListener {
          }
 
          displayField.setText(String.valueOf(result));
-         num1 = 0;
+         resultField.setText("");
+         num1 = result;
          opr = "";
          temp = result;
       }
