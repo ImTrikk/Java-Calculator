@@ -76,7 +76,7 @@ public class calculatorFrame implements ActionListener {
       prevBtn = new Button("prev");
       expnBtn = new Button("x^2");
       sqrBtn = new Button("√");
-      factBtn = new Button("x!");
+      factBtn = new Button("!");
 
       deleteHistory = new Button("Delete History");
       deleteHistory.addActionListener(this);
@@ -280,24 +280,28 @@ public class calculatorFrame implements ActionListener {
 
       // root function
       if (e.getSource() == sqrBtn) {
+         num1 = Double.parseDouble(displayField.getText());
+         opr = "√";
+         result = Math.sqrt(num1);
          num1 = result;
-         opr = "root";
-         resultField.setText(String.valueOf());
       }
 
       if (e.getSource() == factBtn) {
          num1 = Double.parseDouble(displayField.getText());
-         opr = "x!";
+         opr = "!";
       }
 
       String newLine = System.lineSeparator();
       if (e.getSource() == equBtn) {
 
-         String expression = displayField.getText();
-         String[] parts = expression.split(Pattern.quote(opr));
+         if (opr != "!" && opr != "√" && opr != "x^2") {
+            String expression = displayField.getText();
+            String[] parts = expression.split(Pattern.quote(opr));
 
-         num1 = Double.parseDouble(parts[0]);
-         num2 = Double.parseDouble(parts[1]);
+            num1 = Double.parseDouble(parts[0]);
+            num2 = Double.parseDouble(parts[1]);
+
+         }
 
          // num2 = Double.parseDouble(displayField.getText());
 
@@ -357,7 +361,8 @@ public class calculatorFrame implements ActionListener {
                      .append(newLine);
                opr = "";
                break;
-            case "root":
+            case "√":
+               num1 = Double.parseDouble(displayField.getText());
                result = Math.sqrt(num1);
                historyBuilder
                      .append("√")
@@ -376,7 +381,7 @@ public class calculatorFrame implements ActionListener {
                      .append(newLine);
                opr = "";
                break;
-            case "x!":
+            case "!":
                BigInteger factorial = BigInteger.ONE;
                for (int i = 1; i <= num1; i++) {
                   factorial = factorial.multiply(BigInteger.valueOf(i));
