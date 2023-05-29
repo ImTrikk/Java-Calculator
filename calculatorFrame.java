@@ -212,7 +212,6 @@ public class calculatorFrame implements ActionListener {
       }
 
       if (e.getSource() == addBtn) {
-
          if (num1 == 0) {
             displayField.setText(String.valueOf(num1));
             if(num1 == 0){
@@ -232,42 +231,66 @@ public class calculatorFrame implements ActionListener {
          opr = "+";
          displayField.setText(displayField.getText() + opr);
          resultField.setText("");
-
       }
       if (e.getSource() == subBtn) {
-         if (num1 <= 0) {
-            num1 = Double.parseDouble(displayField.getText());
+         if (num1 == 0) {
+            displayField.setText(String.valueOf(num1));
+            if (num1 == 0) {
+               num1 = Double.parseDouble(displayField.getText());
+               System.out.println("debuggin here");
+
+            } else {
+               num1 = Double.parseDouble(resultField.getText());
+               // displayField.setText(String.valueOf(result));
+            }
          } else {
             displayField.setText(String.valueOf(num1));
             // num2 = Double.parseDouble(displayField.getText());
             result = num1 - num2;
-
          }
+
          opr = "-";
          displayField.setText(displayField.getText() + opr);
          resultField.setText("");
       }
       if (e.getSource() == mulBtn) {
-         if (num1 <= 0) {
-            num1 = Double.parseDouble(displayField.getText());
+         if (num1 == 0) {
+            displayField.setText(String.valueOf(num1));
+            if (num1 == 0) {
+               num1 = Double.parseDouble(displayField.getText());
+               System.out.println("debuggin here");
+
+            } else {
+               num1 = Double.parseDouble(resultField.getText());
+               // displayField.setText(String.valueOf(result));
+            }
          } else {
-            num2 = Double.parseDouble(displayField.getText());
+            displayField.setText(String.valueOf(num1));
+            // num2 = Double.parseDouble(displayField.getText());
             result = num1 * num2;
-            displayField.setText(String.valueOf(result));
          }
+
          opr = "x";
          displayField.setText(displayField.getText() + opr);
          resultField.setText("");
       }
       if (e.getSource() == divBtn) {
-         if (num1 <= 0) {
-            num1 = Double.parseDouble(displayField.getText());
+         if (num1 == 0) {
+            displayField.setText(String.valueOf(num1));
+            if (num1 == 0) {
+               num1 = Double.parseDouble(displayField.getText());
+               System.out.println("debuggin here");
+
+            } else {
+               num1 = Double.parseDouble(resultField.getText());
+               // displayField.setText(String.valueOf(result));
+            }
          } else {
             displayField.setText(String.valueOf(num1));
             // num2 = Double.parseDouble(displayField.getText());
             result = num1 / num2;
-
          }
+
          opr = "/";
          displayField.setText(displayField.getText() + opr);
          resultField.setText("");
