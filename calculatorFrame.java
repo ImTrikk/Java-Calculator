@@ -361,15 +361,26 @@ public class calculatorFrame implements ActionListener {
                opr = "";
                break;
             case "/":
-               result = num1 / num2;
-               historyBuilder
-                     .append(num1)
-                     .append(" / ")
-                     .append(num2)
-                     .append(" = ")
-                     .append(result)
-                     .append(newLine);
-               opr = "";
+               if (num2 == 0) {
+                  resultField.setText("");
+                  num1 = 0;
+                  num2 = 0;
+                  displayField.setText("Error");
+                  resultField.setText("");
+               } else {
+                  System.out.println("Debug here...");
+                  result = num1 / num2;
+                  historyBuilder
+                        .append(num1)
+                        .append(" / ")
+                        .append(num2)
+                        .append(" = ")
+                        .append(result)
+                        .append(newLine);
+                  opr = "";
+               }
+               
+
                break;
             case "%":
                result = num1 * (num2 / 100);
