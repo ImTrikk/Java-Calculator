@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 
 import java.lang.Math;
 import java.math.BigInteger;
+import java.util.regex.Pattern;
 
 public class calculatorFrame implements ActionListener {
 
@@ -242,10 +243,9 @@ public class calculatorFrame implements ActionListener {
          if (num1 <= 0) {
             num1 = Double.parseDouble(displayField.getText());
          } else {
-            displayField.setText(String.valueOf(num1));
-            // num2 = Double.parseDouble(displayField.getText());
+            num2 = Double.parseDouble(displayField.getText());
             result = num1 * num2;
-
+            displayField.setText(String.valueOf(result));
          }
          opr = "x";
          displayField.setText(displayField.getText() + opr);
@@ -280,8 +280,9 @@ public class calculatorFrame implements ActionListener {
 
       // root function
       if (e.getSource() == sqrBtn) {
-         num1 = Double.parseDouble(displayField.getText());
+         num1 = result;
          opr = "root";
+         resultField.setText(String.valueOf());
       }
 
       if (e.getSource() == factBtn) {
@@ -293,7 +294,7 @@ public class calculatorFrame implements ActionListener {
       if (e.getSource() == equBtn) {
 
          String expression = displayField.getText();
-         String[] parts = expression.split("\\" + opr);
+         String[] parts = expression.split(Pattern.quote(opr));
 
          num1 = Double.parseDouble(parts[0]);
          num2 = Double.parseDouble(parts[1]);
@@ -323,7 +324,7 @@ public class calculatorFrame implements ActionListener {
                      .append(newLine);
                opr = "";
                break;
-            case "X":
+            case "x":
                result = num1 * num2;
                historyBuilder
                      .append(num1)
