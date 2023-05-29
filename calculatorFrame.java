@@ -140,6 +140,7 @@ public class calculatorFrame implements ActionListener {
 
       deleteHistory.setBounds(490, 578, 230, 60);
       deleteHistory.setFont(functionFont);
+      deleteHistory.setFocusable(false);
       deleteHistory.setBackground(buttonColor);
       deleteHistory.setForeground(Color.white);
 
@@ -194,7 +195,6 @@ public class calculatorFrame implements ActionListener {
       // disposes the frame window onClick (X)
       frame.addWindowListener(
             new WindowAdapter() {
-
                public void windowClosing(WindowEvent e) {
                   frame.dispose();
                }
@@ -435,24 +435,21 @@ public class calculatorFrame implements ActionListener {
 
       // funciton for negate function
       if (e.getSource() == negBtn) {
+         if (opr == null || opr.isEmpty()) {
+            num1 = Integer.parseInt(displayField.getText());
+            num1 *= -1;
+            displayField.setText(String.valueOf(num1));
+         } else {
+            String val = displayField.getText();
+            String[] parts = val.split(Pattern.quote(opr));
 
-        if(opr == null){;
-           num1 = Double.parseDouble(displayField.getText());
-           num1 *= -1;
-        } else{
-           String val = displayField.getText();
-           String[] parts = val.split(Pattern.quote(opr));
-
-           num2 = Double.parseDouble(parts[1]);
-           num2 *= -1;
-        }
-        if(num2 == 0){
-         displayField.setText(String.valueOf(num1));
-        } else{
-           displayField.setText(String.valueOf(num1) + opr + String.valueOf(num2));
-           num1 = 0;
-        }
-         // opr = "";
+            if (parts.length >= 2) {
+               num2 = Integer.parseInt(parts[1]);
+               num2 *= -1;
+               displayField.setText(String.valueOf(num1) + opr + String.valueOf(num2));
+               num1 = 0;
+            }
+         }
       }
 
       if (e.getSource() == deleteHistory) {
