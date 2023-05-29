@@ -212,40 +212,38 @@ public class calculatorFrame implements ActionListener {
       }
 
       if (e.getSource() == addBtn) {
-         if (num1 == 0) {
-            if (num1 == 0) {
+
+        
+            if (num1 == 0 && num2 == 0) {
                num1 = Double.parseDouble(displayField.getText());
                displayField.setText(String.valueOf(num1));
-            } else if(negtemp <= 0) {
-               displayField.setText(String.valueOf(negtemp));
-               num1 = negtemp;
-               // displayField.setText(String.valueOf(result));
+            } else {
+               if (num1 != 0 && num2 != 0) {
+                  displayField.setText(String.valueOf(result));
+                  num1 = result;
+               } else {
+                  displayField.setText(String.valueOf(num1));
+                  result = num1 + num2;
+               }
             }
-         } else {
-            displayField.setText(String.valueOf(num1));
-            // num2 = Double.parseDouble(displayField.getText());
-            result = num1 + num2;
-         }
 
-         opr = "+";
-         displayField.setText(displayField.getText() + opr);
-         resultField.setText("");
+            opr = "+";
+            displayField.setText(displayField.getText() + opr);
+            resultField.setText("");
+         
       }
       if (e.getSource() == subBtn) {
-         if (num1 == 0) {
+         if (num1 == 0 && num2 == 0) {
+            num1 = Double.parseDouble(displayField.getText());
             displayField.setText(String.valueOf(num1));
-            if (num1 == 0) {
-               num1 = Double.parseDouble(displayField.getText());
-               System.out.println("debuggin here");
-
-            } else {
-               num1 = Double.parseDouble(resultField.getText());
-               // displayField.setText(String.valueOf(result));
-            }
          } else {
-            displayField.setText(String.valueOf(num1));
-            // num2 = Double.parseDouble(displayField.getText());
-            result = num1 - num2;
+            if (num1 != 0 && num2 != 0) {
+               displayField.setText(String.valueOf(result));
+               num1 = result;
+            } else {
+               displayField.setText(String.valueOf(num1));
+               result = num1 - num2;
+            }
          }
 
          opr = "-";
@@ -253,20 +251,17 @@ public class calculatorFrame implements ActionListener {
          resultField.setText("");
       }
       if (e.getSource() == mulBtn) {
-         if (num1 == 0) {
+         if (num1 == 0 && num2 == 0) {
+            num1 = Double.parseDouble(displayField.getText());
             displayField.setText(String.valueOf(num1));
-            if (num1 == 0) {
-               num1 = Double.parseDouble(displayField.getText());
-               System.out.println("debuggin here");
-
-            } else {
-               num1 = Double.parseDouble(resultField.getText());
-               // displayField.setText(String.valueOf(result));
-            }
          } else {
-            displayField.setText(String.valueOf(num1));
-            // num2 = Double.parseDouble(displayField.getText());
-            result = num1 * num2;
+            if (num1 != 0 && num2 != 0) {
+               displayField.setText(String.valueOf(result));
+               num1 = result;
+            } else {
+               displayField.setText(String.valueOf(num1));
+               result *= num1;
+            }
          }
 
          opr = "x";
@@ -274,18 +269,17 @@ public class calculatorFrame implements ActionListener {
          resultField.setText("");
       }
       if (e.getSource() == divBtn) {
-         if (num1 == 0) {
+         if (num1 == 0 && num2 == 0) {
+            num1 = Double.parseDouble(displayField.getText());
             displayField.setText(String.valueOf(num1));
-            if (num1 == 0) {
-               num1 = Double.parseDouble(displayField.getText());
-            } else {
-               num1 = Double.parseDouble(resultField.getText());
-               // displayField.setText(String.valueOf(result));
-            }
          } else {
-            displayField.setText(String.valueOf(num1));
-            // num2 = Double.parseDouble(displayField.getText());
-            result = num1 / num2;
+            if (num1 != 0 && num2 != 0) {
+               displayField.setText(String.valueOf(result));
+               num1 = result;
+            } else {
+               displayField.setText(String.valueOf(num1));
+               result = num1 / num2;
+            }
          }
 
          opr = "/";
@@ -457,6 +451,7 @@ public class calculatorFrame implements ActionListener {
       if (e.getSource() == clrBtn) {
          displayField.setText("");
          num1 = 0;
+         num2 = 0;
          opr = "";
          resultField.setText("");
       }
