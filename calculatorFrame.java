@@ -213,14 +213,19 @@ public class calculatorFrame implements ActionListener {
 
       if (e.getSource() == addBtn) {
 
-         if (num1 <= 0) {
-            num1 = Double.parseDouble(displayField.getText());
+         if (num1 == 0) {
+            if(num1 == 0){
+               num1 = Double.parseDouble(displayField.getText());
+               System.out.println("Debug");
+            } else{
+               num1 = Double.parseDouble(resultField.getText());
+            }
          } else {
             displayField.setText(String.valueOf(num1));
             // num2 = Double.parseDouble(displayField.getText());
             result = num1 + num2;
-
          }
+
          opr = "+";
          displayField.setText(displayField.getText() + opr);
          resultField.setText("");
@@ -435,6 +440,7 @@ public class calculatorFrame implements ActionListener {
 
       // funciton for negate function
       if (e.getSource() == negBtn) {
+
          if (opr == null || opr.isEmpty()) {
             num1 = Integer.parseInt(displayField.getText());
             num1 *= -1;
