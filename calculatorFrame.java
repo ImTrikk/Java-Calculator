@@ -213,24 +213,23 @@ public class calculatorFrame implements ActionListener {
 
       if (e.getSource() == addBtn) {
 
-        
-            if (num1 == 0 && num2 == 0) {
-               num1 = Double.parseDouble(displayField.getText());
-               displayField.setText(String.valueOf(num1));
+         if (num1 == 0 && num2 == 0) {
+            num1 = Double.parseDouble(displayField.getText());
+            displayField.setText(String.valueOf(num1));
+         } else {
+            if (num1 != 0 && num2 != 0) {
+               displayField.setText(String.valueOf(result));
+               num1 = result;
             } else {
-               if (num1 != 0 && num2 != 0) {
-                  displayField.setText(String.valueOf(result));
-                  num1 = result;
-               } else {
-                  displayField.setText(String.valueOf(num1));
-                  result = num1 + num2;
-               }
+               displayField.setText(String.valueOf(num1));
+               result = num1 + num2;
             }
+         }
 
-            opr = "+";
-            displayField.setText(displayField.getText() + opr);
-            resultField.setText("");
-         
+         opr = "+";
+         displayField.setText(displayField.getText() + opr);
+         resultField.setText("");
+
       }
       if (e.getSource() == subBtn) {
          if (num1 == 0 && num2 == 0) {
@@ -434,9 +433,9 @@ public class calculatorFrame implements ActionListener {
 
       // Decimal function
       if (e.getSource() == decBtn) {
-         if (!displayField.getText().contains(".")) {
-            displayField.setText(displayField.getText() + ".");
-         }
+
+         displayField.setText(displayField.getText() + ".");
+
       }
 
       // deletes the previous number
