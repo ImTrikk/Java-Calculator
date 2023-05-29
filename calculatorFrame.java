@@ -429,30 +429,30 @@ public class calculatorFrame implements ActionListener {
       if (e.getSource() == clrBtn) {
          displayField.setText("");
          num1 = 0;
+         opr = "";
          resultField.setText("");
       }
 
       // funciton for negate function
       if (e.getSource() == negBtn) {
-         String val = displayField.getText();
-         Double value = Double.parseDouble(val);
 
-         boolean negateNum1 = false; // Flag to indicate if num1 should be negated
-         boolean negateNum2 = false; // Flag to indicate if num2 should be negated
+        if(opr == null){;
+           num1 = Double.parseDouble(displayField.getText());
+           num1 *= -1;
+        } else{
+           String val = displayField.getText();
+           String[] parts = val.split(Pattern.quote(opr));
 
-         // Check the negate flags and apply negation accordingly
-         if (negateNum1) {
-            num1 = -value;
-            negateNum1 = false; // Reset the flag
-         } else if (negateNum2) {
-            num2 = -value;
-            negateNum2 = false; // Reset the flag
-         } else {
-            // By default, negate num1
-            num1 = -value;
-         }
-
+           num2 = Double.parseDouble(parts[1]);
+           num2 *= -1;
+        }
+        if(num2 == 0){
          displayField.setText(String.valueOf(num1));
+        } else{
+           displayField.setText(String.valueOf(num1) + opr + String.valueOf(num2));
+           num1 = 0;
+        }
+         // opr = "";
       }
 
       if (e.getSource() == deleteHistory) {
