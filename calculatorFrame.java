@@ -1,9 +1,12 @@
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Panel;
+import java.awt.Scrollbar;
+import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +22,15 @@ public class calculatorFrame implements ActionListener {
    Panel panel = new Panel();
    TextField displayField = new TextField();
    TextField resultField = new TextField();
+   TextArea history = new TextArea();
+   Panel historyPanel = new Panel();
+   Scrollbar scroll = new Scrollbar(Scrollbar.VERTICAL, 0, 1, 0, 255);
+   StringBuilder historyBuilder = new StringBuilder();
    Button[] functionBtn = new Button[14];
    Button[] numpadsBtn = new Button[10];
    Button addBtn, subBtn, divBtn, mulBtn, decBtn, equBtn, delBtn, clrBtn, percentBtn, negBtn, prevBtn, expnBtn, sqrBtn,
          factBtn;
+   Button deleteHistory;
 
    // add font styles here
    Font displayFont = new Font("Arial", Font.BOLD, 36);
@@ -34,6 +42,9 @@ public class calculatorFrame implements ActionListener {
    // Frame Color
    Color buttonColor = new Color(30, 30, 30);
 
+   // Delte button color and font
+   Color deleteColor = new Color(0, 67, 220);
+
    // button color
    Color frameColor = new Color(247, 247, 247);
 
@@ -44,7 +55,7 @@ public class calculatorFrame implements ActionListener {
    calculatorFrame() {
 
       // customizes the frame
-      frame.setSize(500, 700);
+      frame.setSize(750, 700);
       frame.setLayout(null);
       frame.setVisible(true);
       frame.setResizable(false);
@@ -65,6 +76,9 @@ public class calculatorFrame implements ActionListener {
       expnBtn = new Button("x^2");
       sqrBtn = new Button("√");
       factBtn = new Button("x!");
+
+      deleteHistory = new Button("Delete History");
+      deleteHistory.addActionListener(this);
 
       // !add exponent functions
       functionBtn[0] = addBtn;
@@ -101,6 +115,8 @@ public class calculatorFrame implements ActionListener {
          numpadsBtn[i].setForeground(Color.white);
       }
 
+      // add action listner for button
+
       // add and set displayField
       displayField.setBounds(35, 70, 430, 60);
       displayField.setFont(resultFont);
@@ -110,6 +126,29 @@ public class calculatorFrame implements ActionListener {
       resultField.setBounds(35, 130, 430, 60);
       resultField.setFont(displayFont);
       frame.add(resultField);
+
+      // panel for history
+      historyPanel.setLayout(new BorderLayout());
+      historyPanel.setBounds(490, 70, 200, 430);
+      historyPanel.setSize(230, 497);
+      historyPanel.add(scroll);
+      historyPanel.add(history, BorderLayout.CENTER);
+      frame.add(historyPanel);
+
+      // clear history button
+
+      deleteHistory.setBounds(490, 578, 230, 60);
+      deleteHistory.setFont(functionFont);
+      deleteHistory.setBackground(buttonColor);
+      deleteHistory.setForeground(Color.white);
+
+      frame.add(deleteHistory);
+
+      // text field for history
+      history.setBounds(10, 10, 200, 430);
+
+      history.setFont(additionalFont);
+      historyPanel.add(history);
 
       // // set previous button
       // prevBtn.setBounds(360, 140, 90, 40);
@@ -167,62 +206,70 @@ public class calculatorFrame implements ActionListener {
 
       for (int i = 0; i < 10; i++) {
          if (e.getSource() == numpadsBtn[i]) {
-
             displayField.setText(displayField.getText().concat(String.valueOf(i)));
          }
       }
 
-
       if (e.getSource() == addBtn) {
 
-         if(num1 <= 0){
+         if (num1 <= 0) {
             num1 = Double.parseDouble(displayField.getText());
-         }
-         else{
-            num2 = Double.parseDouble(displayField.getText());
+         } else {
+            displayField.setText(String.valueOf(num1));
+            // num2 = Double.parseDouble(displayField.getText());
             result = num1 + num2;
-            num1 = result;
+
          }
          opr = "+";
          displayField.setText(displayField.getText() + opr);
+         resultField.setText("");
+
       }
       if (e.getSource() == subBtn) {
          if (num1 <= 0) {
             num1 = Double.parseDouble(displayField.getText());
          } else {
-            num2 = Double.parseDouble(displayField.getText());
+            displayField.setText(String.valueOf(num1));
+            // num2 = Double.parseDouble(displayField.getText());
             result = num1 - num2;
-            num1 = result;
+
          }
          opr = "-";
          displayField.setText(displayField.getText() + opr);
+         resultField.setText("");
       }
       if (e.getSource() == mulBtn) {
-         if (num1 == 0) {
+         if (num1 <= 0) {
             num1 = Double.parseDouble(displayField.getText());
          } else {
-            num2 = Double.parseDouble(displayField.getText());
+            displayField.setText(String.valueOf(num1));
+            // num2 = Double.parseDouble(displayField.getText());
             result = num1 * num2;
-            num1 = result;
+
          }
          opr = "x";
          displayField.setText(displayField.getText() + opr);
+         resultField.setText("");
       }
       if (e.getSource() == divBtn) {
          if (num1 <= 0) {
             num1 = Double.parseDouble(displayField.getText());
          } else {
-            num2 = Double.parseDouble(displayField.getText());
+            displayField.setText(String.valueOf(num1));
+            // num2 = Double.parseDouble(displayField.getText());
             result = num1 / num2;
-            num1 = result;
+
          }
          opr = "/";
          displayField.setText(displayField.getText() + opr);
+         resultField.setText("");
       }
 
       // !not working yet
       if (e.getSource() == percentBtn) {
          num1 = Double.parseDouble(displayField.getText());
+         num1 = num1 / 100;
+         displayField.setText(String.valueOf(num1));
          opr = "%";
       }
       // exponent function
@@ -237,19 +284,16 @@ public class calculatorFrame implements ActionListener {
          opr = "root";
       }
 
-      if(e.getSource() == factBtn){
+      if (e.getSource() == factBtn) {
          num1 = Double.parseDouble(displayField.getText());
          opr = "x!";
       }
 
-
+      String newLine = System.lineSeparator();
       if (e.getSource() == equBtn) {
-
 
          String expression = displayField.getText();
          String[] parts = expression.split("\\" + opr);
-
-         //5 displayField 
 
          num1 = Double.parseDouble(parts[0]);
          num2 = Double.parseDouble(parts[1]);
@@ -259,45 +303,93 @@ public class calculatorFrame implements ActionListener {
          switch (opr) {
             case "+":
                result = num1 + num2;
+               historyBuilder
+                     .append(num1)
+                     .append(" + ")
+                     .append(num2)
+                     .append(" = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
             case "-":
                result = num1 - num2;
+               historyBuilder
+                     .append(num1)
+                     .append(" - ")
+                     .append(num2)
+                     .append(" = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
-            case "x":
+            case "X":
                result = num1 * num2;
+               historyBuilder
+                     .append(num1)
+                     .append(" X ")
+                     .append(num2)
+                     .append(" = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
             case "/":
                result = num1 / num2;
+               historyBuilder
+                     .append(num1)
+                     .append(" / ")
+                     .append(num2)
+                     .append(" = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
             case "%":
-               result = num1 / 100;
+               result = num1 * (num2 / 100);
+               historyBuilder
+                     .append(num1)
+                     .append(" % ")
+                     .append(num2)
+                     .append(" = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
             case "root":
                result = Math.sqrt(num1);
+               historyBuilder
+                     .append("√")
+                     .append(num1)
+                     .append(" = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
             case "x^2":
                result = num1 * num1;
+               historyBuilder
+                     .append(num1)
+                     .append("^2 = ")
+                     .append(result)
+                     .append(newLine);
                opr = "";
                break;
             case "x!":
                BigInteger factorial = BigInteger.ONE;
                for (int i = 1; i <= num1; i++) {
                   factorial = factorial.multiply(BigInteger.valueOf(i));
-                  // 1 * 2 * .... num1
-                  // 5 * 4 * 3 
                }
                result = factorial.doubleValue();
+               historyBuilder
+                     .append(num1)
+                     .append("! = ")
+                     .append(result)
+                     .append(newLine);
                break;
          }
-
          resultField.setText(String.valueOf(result));
-         displayField.setText("");
+         history.setText(historyBuilder.toString());
          num1 = result;
          opr = "";
          temp = result;
@@ -330,6 +422,7 @@ public class calculatorFrame implements ActionListener {
       // deletes the entirem displayField
       if (e.getSource() == clrBtn) {
          displayField.setText("");
+         num1 = 0;
          resultField.setText("");
       }
 
@@ -354,6 +447,11 @@ public class calculatorFrame implements ActionListener {
          }
 
          displayField.setText(String.valueOf(num1));
+      }
+
+      if (e.getSource() == deleteHistory) {
+         historyBuilder.setLength(0);
+         history.setText("");
       }
    }
 
