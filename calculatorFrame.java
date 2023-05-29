@@ -50,7 +50,7 @@ public class calculatorFrame implements ActionListener {
    Color frameColor = new Color(247, 247, 247);
 
    String opr;
-   double num1 = 0, num2 = 0, result = 0;
+   double num1 = 0, num2 = 0, result = 0, negtemp = 0;
    double temp = 0;
 
    calculatorFrame() {
@@ -213,13 +213,12 @@ public class calculatorFrame implements ActionListener {
 
       if (e.getSource() == addBtn) {
          if (num1 == 0) {
-            displayField.setText(String.valueOf(num1));
-            if(num1 == 0){
+            if (num1 == 0) {
                num1 = Double.parseDouble(displayField.getText());
-               System.out.println("debuggin here");
-
-            }else{
-               num1 = Double.parseDouble(resultField.getText());
+               displayField.setText(String.valueOf(num1));
+            } else if(negtemp <= 0) {
+               displayField.setText(String.valueOf(negtemp));
+               num1 = negtemp;
                // displayField.setText(String.valueOf(result));
             }
          } else {
@@ -279,8 +278,6 @@ public class calculatorFrame implements ActionListener {
             displayField.setText(String.valueOf(num1));
             if (num1 == 0) {
                num1 = Double.parseDouble(displayField.getText());
-               System.out.println("debuggin here");
-
             } else {
                num1 = Double.parseDouble(resultField.getText());
                // displayField.setText(String.valueOf(result));
@@ -482,6 +479,7 @@ public class calculatorFrame implements ActionListener {
                num1 = 0;
             }
          }
+         num1 = negtemp;
       }
 
       if (e.getSource() == deleteHistory) {
