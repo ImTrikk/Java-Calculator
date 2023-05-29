@@ -214,11 +214,14 @@ public class calculatorFrame implements ActionListener {
       if (e.getSource() == addBtn) {
 
          if (num1 == 0) {
+            displayField.setText(String.valueOf(num1));
             if(num1 == 0){
                num1 = Double.parseDouble(displayField.getText());
-               System.out.println("Debug");
-            } else{
+               System.out.println("debuggin here");
+
+            }else{
                num1 = Double.parseDouble(resultField.getText());
+               // displayField.setText(String.valueOf(result));
             }
          } else {
             displayField.setText(String.valueOf(num1));
